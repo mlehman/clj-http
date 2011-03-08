@@ -8,7 +8,7 @@
   (:import (org.apache.http.impl.client DefaultHttpClient)))
 
 (defn- parse-headers [#^HttpResponse http-resp]
-  (into {} (map (fn [#^Header h] [(.toLowerCase (.getName h)) (.getValue h)])
+  (into {} (map (fn [#^Header h] [(.getName h) (.getValue h)])
                 (iterator-seq (.headerIterator http-resp)))))
 
 (defn request
