@@ -48,7 +48,9 @@
             (.setEntity #^HttpEntityEnclosingRequest http-req http-body)))
         (let [http-resp (.execute http-client http-req)
               http-entity (.getEntity http-resp)
-              resp {:status (.getStatusCode (.getStatusLine http-resp))
+              status-line (.getStatusLine http-resp)
+              resp {:status (.getStatusCode status-line)
+                    :reason (.getReasonPhrase status-line)
                     :headers (parse-headers http-resp)
                     :body (if http-entity (EntityUtils/toByteArray http-entity))}]
           (.shutdown (.getConnectionManager http-client))
